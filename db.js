@@ -41,6 +41,14 @@ async function connect() {
       },
     };
   } else {
+    // On a serverless platform there is no writable disk and no local engine to
+    // fall back to. Fail loudly here rather than producing a confusing EROFS
+    // deep inside PGlite on the first request.
+    if (process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NETLIFY || process.env.NODE_ENV === 'production') {
+      throw new Error(
+        'No database connection string. Set NETLIFY_DB_URL (or DATABASE_URL). ' +
+        'On Netlify, run: npx netlify-cli database init');
+    }
     const path = require('path');
     const { PGlite } = require('@electric-sql/pglite');
     const dir = process.env.PGLITE_DIR || path.join(__dirname, '.pgdata');
