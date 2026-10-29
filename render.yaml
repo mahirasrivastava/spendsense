@@ -1,0 +1,20 @@
+# Render blueprint. Deploy with: render.com -> New -> Blueprint.
+# Set DATABASE_URL to a managed Postgres for a multi-instance setup; the disk
+# below is only needed for the embedded PGlite fallback.
+services:
+  - type: web
+    name: spendsense
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PGLITE_DIR
+        value: /var/data/pgdata
+    disk:
+      name: spendsense-data
+      mountPath: /var/data
+      sizeGB: 1

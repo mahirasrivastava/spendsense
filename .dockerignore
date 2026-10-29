@@ -1,0 +1,14 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+
+# never ship a local database into an image — it holds real financial data
+spendsense.db
+spendsense.db-wal
+spendsense.db-shm
+*.db
+*.db-wal
+*.db-shm
+.pgdata
+.netlify

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpendSense — Student Expense & Budget Planner</title>
+  <meta name="description" content="SpendSense helps students track spending, forecast the month ahead, catch unusual charges and split costs with roommates." />
+  <meta name="theme-color" content="#3b82f6" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cdefs%3E%3ClinearGradient id="g" x1="0" y1="0" x2="1" y2="1"%3E%3Cstop offset="0%25" stop-color="%2306b6d4"/%3E%3Cstop offset="100%25" stop-color="%234f46e5"/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="24" height="24" rx="6" fill="url(%23g)"/%3E%3Cpath d="M15.6 7.6c0-1.8-1.7-2.9-4-2.9S7.6 5.8 7.6 7.6c0 4 8 3 8 7 0 1.8-1.7 2.9-4 2.9s-4-1.1-4-2.9" fill="none" stroke="%23fff" stroke-width="2.1" stroke-linecap="round"/%3E%3C/svg%3E' />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script src="/assets/icons.js"></script>
+  <script src="/assets/site.js"></script>
+</head>
+<body class="page">
+
+  <header class="nav-wrap" id="navWrap">
+    <nav class="navbar" id="navbar" aria-label="Main">
+      <a class="nav-brand" href="/">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-logo" /></svg></span>
+        SpendSense
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/#how">How it works</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+      </ul>
+      <span class="nav-spacer"></span>
+      <button class="icon-btn" data-theme-toggle type="button" aria-label="Toggle dark mode">
+        <svg class="ico ico-sun"><use href="#i-sun" /></svg>
+        <svg class="ico ico-moon"><use href="#i-moon" /></svg>
+      </button>
+      <div class="nav-actions" id="navAuth"></div>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+        <svg class="ico ico-menu"><use href="#i-menu" /></svg>
+        <svg class="ico ico-x"><use href="#i-x" /></svg>
+      </button>
+    </nav>
+    <div class="nav-mobile" id="navMobile" hidden>
+      <ul>
+        <li><a href="/#features">Features <svg class="ico ico-sm"><use href="#i-arrow-right"/></svg></a></li>
+        <li><a href="/#how">How it works <svg class="ico ico-sm"><use href="#i-arrow-right"/></svg></a></li>
+        <li><a href="/#faq">FAQ <svg class="ico ico-sm"><use href="#i-arrow-right"/></svg></a></li>
+      </ul>
+      <div class="nav-mobile-auth" id="navMobileAuth"></div>
+    </div>
+  </header>
+
+  <!-- ---------------- hero ---------------- -->
+  <section class="hero-section">
+    <div class="hero-glow"></div>
+    <div class="hero-grid-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="badge grad" data-reveal><svg class="ico"><use href="#i-sparkles"/></svg> Built for student budgets</span>
+        <h1 data-reveal="60">Know where your money goes<br /><span class="grad-text">before the month runs out</span></h1>
+        <p class="lead" data-reveal="120">SpendSense tracks every rupee, forecasts your month from your actual pace, flags charges that look unusual, and settles up what your roommates owe you.</p>
+        <div class="hero-cta" data-reveal="180">
+          <a class="btn primary lg" href="/signup">Create free account <svg class="ico"><use href="#i-arrow-right"/></svg></a>
+          <a class="btn lg" href="/#features">See how it works</a>
+        </div>
+        <div class="hero-note" data-reveal="240">
+          <span><svg class="ico"><use href="#i-check"/></svg> Free to use</span>
+          <span><svg class="ico"><use href="#i-check"/></svg> No card required</span>
+          <span><svg class="ico"><use href="#i-check"/></svg> Your data stays on your machine</span>
+        </div>
+      </div>
+
+      <!-- product preview -->
+      <div class="hero-shot" data-reveal="300">
+        <div class="shot-bar">
+          <span class="shot-dot"></span><span class="shot-dot"></span><span class="shot-dot"></span>
+        </div>
+        <div class="shot-body">
+          <div class="hero on_track" style="margin:0">
+            <div class="hero-inner">
+              <div>
+                <span class="hero-eyebrow"><svg class="ico ico-sm"><use href="#i-trending-up"/></svg> Smart forecast</span>
+                <h2 style="font-size:1.3rem;margin:8px 0 5px">You are on track</h2>
+                <p style="font-size:.88rem">At ₹317 a day, you are projected to spend ₹9,841 by month-end, against a ₹12,000 budget.</p>
+              </div>
+              <div class="hero-badge"><div class="k">Left to spend</div><div class="v">₹2,794</div></div>
+            </div>
+          </div>
+          <div class="mock-row">
+            <div class="mock-tile"><div class="l">Spent</div><div class="n">₹9,206</div></div>
+            <div class="mock-tile"><div class="l">Remaining</div><div class="n" style="color:var(--good)">₹2,794</div></div>
+            <div class="mock-tile"><div class="l">Projected</div><div class="n">₹9,841</div></div>
+            <div class="mock-tile"><div class="l">Transactions</div><div class="n">19</div></div>
+          </div>
+          <div class="mock-bars">
+            <i style="height:62%;animation-delay:.05s"></i><i style="height:28%;animation-delay:.1s"></i>
+            <i style="height:35%;animation-delay:.15s"></i><i style="height:48%;animation-delay:.2s"></i>
+            <i style="height:22%;animation-delay:.25s"></i><i style="height:95%;animation-delay:.3s"></i>
+            <i style="height:30%;animation-delay:.35s"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- features ---------------- -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head">
+        <span class="badge" data-reveal><svg class="ico"><use href="#i-layout-grid"/></svg> Features</span>
+        <h2 data-reveal="60">Everything a student budget actually needs</h2>
+        <p data-reveal="110">Not a spreadsheet with extra steps. SpendSense does the arithmetic, the forecasting and the awkward roommate maths for you.</p>
+      </div>
+      <div class="grid-3">
+        <article class="feature" data-reveal>
+          <div class="feature-ico"><svg class="ico"><use href="#i-trending-up"/></svg></div>
+          <h3>Month-end forecast</h3>
+          <p>Your daily pace is projected across the full month, so you find out you are heading over budget with time left to do something about it.</p>
+        </article>
+        <article class="feature" data-reveal="80">
+          <div class="feature-ico"><svg class="ico"><use href="#i-zap"/></svg></div>
+          <h3>Unusual spend detection</h3>
+          <p>Every charge is compared against your own history for that category. Anything well above your normal gets flagged automatically.</p>
+        </article>
+        <article class="feature" data-reveal="160">
+          <div class="feature-ico"><svg class="ico"><use href="#i-target"/></svg></div>
+          <h3>Category limits</h3>
+          <p>Set a cap per category and watch the progress bars. You get a warning at 80% and a clear alert once you cross the line.</p>
+        </article>
+        <article class="feature" data-reveal>
+          <div class="feature-ico"><svg class="ico"><use href="#i-split"/></svg></div>
+          <h3>Roommate splitting</h3>
+          <p>Log shared costs, split them evenly, and get the shortest list of transfers that clears every balance between everyone.</p>
+        </article>
+        <article class="feature" data-reveal="80">
+          <div class="feature-ico"><svg class="ico"><use href="#i-repeat"/></svg></div>
+          <h3>Recurring expenses</h3>
+          <p>Rent, mess fees and subscriptions post themselves when they come due, so your forecast is never missing the predictable stuff.</p>
+        </article>
+        <article class="feature" data-reveal="160">
+          <div class="feature-ico"><svg class="ico"><use href="#i-pie-chart"/></svg></div>
+          <h3>Charts and CSV export</h3>
+          <p>Category breakdown, a seven-day bar chart and a six-month trend line. Export any month to CSV when you need the raw numbers.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- how it works ---------------- -->
+  <section class="section" id="how" style="background:var(--surface);border-block:1px solid var(--line)">
+    <div class="container">
+      <div class="section-head">
+        <span class="badge" data-reveal><svg class="ico"><use href="#i-activity"/></svg> How it works</span>
+        <h2 data-reveal="60">Three steps, then it runs itself</h2>
+      </div>
+      <div class="grid-2" style="align-items:center;gap:44px">
+        <div data-reveal>
+          <div class="step">
+            <div class="step-num">1</div>
+            <div><h3>Set your monthly budget</h3><p>Add what you have to spend and, if you want, a savings goal. SpendSense works out the number you need to stay under.</p></div>
+          </div>
+          <hr class="divider" />
+          <div class="step">
+            <div class="step-num">2</div>
+            <div><h3>Log expenses as you go</h3><p>A few seconds per entry, with categories and notes. Recurring bills post themselves, so most of the month fills in on its own.</p></div>
+          </div>
+          <hr class="divider" />
+          <div class="step">
+            <div class="step-num">3</div>
+            <div><h3>Watch the forecast</h3><p>The dashboard shows where you will land at this pace, which categories are running hot, and what your roommates owe you.</p></div>
+          </div>
+        </div>
+        <div class="card" data-reveal="120" style="margin:0">
+          <div class="card-head"><h3><svg class="ico"><use href="#i-target"/></svg> Category limits</h3></div>
+          <div class="mt">
+            <div style="display:flex;justify-content:space-between;font-size:.87rem;font-weight:600"><span>Food</span><span class="muted num">₹1,490 / ₹4,000</span></div>
+            <div class="progress thin"><div style="width:37%"></div></div>
+          </div>
+          <div class="mt">
+            <div style="display:flex;justify-content:space-between;font-size:.87rem;font-weight:600"><span>Shopping</span><span class="muted num">₹1,898 / ₹2,500</span></div>
+            <div class="progress thin warn"><div style="width:76%"></div></div>
+          </div>
+          <div class="mt">
+            <div style="display:flex;justify-content:space-between;font-size:.87rem;font-weight:600"><span>Entertainment</span><span class="num" style="color:var(--bad)">₹1,900 / ₹1,200</span></div>
+            <div class="progress thin over"><div style="width:100%"></div></div>
+          </div>
+          <div class="alert over" style="margin-top:18px">
+            <svg class="ico ico-sm"><use href="#i-alert-triangle"/></svg>
+            <span>Entertainment: over budget (₹1900 of ₹1200)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- faq ---------------- -->
+  <section class="section" id="faq">
+    <div class="container" style="max-width:760px">
+      <div class="section-head">
+        <span class="badge" data-reveal><svg class="ico"><use href="#i-alert-circle"/></svg> FAQ</span>
+        <h2 data-reveal="60">Questions, answered</h2>
+      </div>
+      <details class="faq-item" data-reveal>
+        <summary>Is my financial data private? <svg class="ico"><use href="#i-chevron-down"/></svg></summary>
+        <p>Yes. SpendSense runs on your own machine and stores everything in a local SQLite database file. Nothing is sent to a third-party service, and each account only ever sees its own data.</p>
+      </details>
+      <details class="faq-item" data-reveal="60">
+        <summary>How does the forecast work? <svg class="ico"><use href="#i-chevron-down"/></svg></summary>
+        <p>It divides what you have spent so far by the number of days elapsed, then projects that daily pace across the whole month. If the projection lands over your budget you are warned early, while you can still change course.</p>
+      </details>
+      <details class="faq-item" data-reveal="120">
+        <summary>What counts as unusual spending? <svg class="ico"><use href="#i-chevron-down"/></svg></summary>
+        <p>Each expense is compared with the mean and standard deviation of your own history in that category. Anything above ₹300 that sits more than two standard deviations out, or more than double your average, gets flagged.</p>
+      </details>
+      <details class="faq-item" data-reveal="180">
+        <summary>How is the roommate settle-up calculated? <svg class="ico"><use href="#i-chevron-down"/></svg></summary>
+        <p>Every shared expense adds to what the payer is owed and subtracts each person's share. The balances are then matched largest creditor against largest debtor, which produces the fewest transfers needed to clear everyone.</p>
+      </details>
+      <details class="faq-item" data-reveal="240">
+        <summary>Can I get my data out? <svg class="ico"><use href="#i-chevron-down"/></svg></summary>
+        <p>Any month exports to CSV from the Expenses page, with dates, descriptions, categories, amounts and notes.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ---------------- cta ---------------- -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="cta-band" data-reveal>
+        <h2>Start the month in control</h2>
+        <p>Create an account and set your first budget in under a minute. Your demo data is already waiting.</p>
+        <div class="hero-cta" style="margin:0">
+          <a class="btn on-brand lg" href="/signup">Create free account <svg class="ico"><use href="#i-arrow-right"/></svg></a>
+          <a class="btn on-brand-ghost lg" href="/login">I already have one</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- footer ---------------- -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="nav-brand" href="/">
+            <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-logo" /></svg></span>
+            SpendSense
+          </a>
+          <p>A student expense and budget planner that forecasts your month, flags unusual spending and settles up with roommates.</p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/#features">Features</a></li>
+            <li><a href="/#how">How it works</a></li>
+            <li><a href="/app">Dashboard</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Account</h4>
+          <ul>
+            <li><a href="/login">Log in</a></li>
+            <li><a href="/signup">Create account</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <ul>
+            <li><a href="/#faq">FAQ</a></li>
+            <li><a href="/#how">Getting started</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="yr">2026</span> SpendSense. Built as a web technology project.</span>
+        <span>Node.js · Express · SQLite</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+# Netlify configuration for SpendSense.
+#
+# The frontend assets are served from the CDN; every page and /api route is
+# handled by one Express-backed function. The database is Netlify DB (Neon) —
+# provision it once with:  netlify init db
+[build]
+  command = "npm install"
+  publish = "public"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NODE_ENV = "production"
+
+[functions]
+  node_bundler = "esbuild"
+  # views/ holds the page HTML that the function sends with res.sendFile
+  included_files = ["views/**"]
+  # PGlite is the local-development database only; it must never be bundled
+  external_node_modules = ["@electric-sql/pglite", "better-sqlite3"]
+
+# Static assets win over the catch-all below, so /assets/* comes from the CDN.
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api"
+  status = 200

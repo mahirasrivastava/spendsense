@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — SpendSense</title>
+  <meta name="theme-color" content="#3b82f6" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cdefs%3E%3ClinearGradient id="g" x1="0" y1="0" x2="1" y2="1"%3E%3Cstop offset="0%25" stop-color="%2306b6d4"/%3E%3Cstop offset="100%25" stop-color="%234f46e5"/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="24" height="24" rx="6" fill="url(%23g)"/%3E%3Cpath d="M15.6 7.6c0-1.8-1.7-2.9-4-2.9S7.6 5.8 7.6 7.6c0 4 8 3 8 7 0 1.8-1.7 2.9-4 2.9s-4-1.1-4-2.9" fill="none" stroke="%23fff" stroke-width="2.1" stroke-linecap="round"/%3E%3C/svg%3E' />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script src="/assets/icons.js"></script>
+  <script src="/assets/site.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <a class="brand" href="/">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-logo" /></svg></span>
+        <span class="brand-text">SpendSense<small>Budget planner</small></span>
+      </a>
+
+      <nav class="nav" id="tabs" aria-label="Sections">
+        <button class="nav-item active" data-tab="dashboard"><svg class="ico"><use href="#i-activity" /></svg><span>Dashboard</span></button>
+        <button class="nav-item" data-tab="expenses"><svg class="ico"><use href="#i-receipt" /></svg><span>Expenses</span></button>
+        <button class="nav-item" data-tab="budgets"><svg class="ico"><use href="#i-target" /></svg><span>Budgets</span></button>
+        <button class="nav-item" data-tab="recurring"><svg class="ico"><use href="#i-repeat" /></svg><span>Recurring</span></button>
+        <button class="nav-item" data-tab="roommates"><svg class="ico"><use href="#i-users" /></svg><span>Roommates</span></button>
+        <button class="nav-item" data-tab="import"><svg class="ico"><use href="#i-download" /></svg><span>Import</span></button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="mini-card" id="sidebarStat">
+          <div class="mini-label">This month</div>
+          <div class="mini-value">—</div>
+          <div class="mini-foot">Loading budget…</div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1 id="pageTitle">Dashboard</h1>
+          <p class="sub" id="pageSub">An overview of where your money went</p>
+        </div>
+        <div class="topbar-right">
+          <label class="month-pick">
+            <svg class="ico"><use href="#i-calendar" /></svg>
+            <input type="month" id="monthPicker" aria-label="Month" />
+          </label>
+          <button class="icon-btn" data-theme-toggle type="button" aria-label="Toggle dark mode">
+            <svg class="ico ico-sun"><use href="#i-sun" /></svg>
+            <svg class="ico ico-moon"><use href="#i-moon" /></svg>
+          </button>
+          <div class="nav-actions" id="navAuth"></div>
+        </div>
+      </header>
+
+      <main id="view" class="view"></main>
+    </div>
+  </div>
+
+  <div id="modalRoot"></div>
+
+  <script src="/assets/chart.min.js"></script>
+  <script src="/assets/app.js"></script>
+</body>
+</html>

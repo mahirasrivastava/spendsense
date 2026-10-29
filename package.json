@@ -1,0 +1,25 @@
+{
+  "name": "spendsense",
+  "version": "1.0.0",
+  "description": "SpendSense — Student Expense & Budget Planner (HTML/CSS/JS/AJAX + Node/Express + Postgres)",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "seed": "node seed.js",
+    "migrate": "node migrate-sqlite-to-postgres.js",
+    "start:prod": "NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.13",
+    "@neondatabase/serverless": "^1.2.0",
+    "express": "^4.21.0",
+    "serverless-http": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "better-sqlite3": "^11.3.0"
+  }
+}
