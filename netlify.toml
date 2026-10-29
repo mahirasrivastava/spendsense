@@ -4,7 +4,9 @@
 # handled by one Express-backed function. The database is Netlify DB (Neon) —
 # provision it once with:  netlify init db
 [build]
-  command = "npm install"
+  # --omit=dev keeps better-sqlite3 (a devDependency, used only by the local
+  # migration script) from being compiled from source on Netlify's builders.
+  command = "npm install --omit=dev"
   publish = "public"
   functions = "netlify/functions"
 
