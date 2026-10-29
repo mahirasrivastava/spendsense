@@ -118,7 +118,7 @@ Browser (HTML + CSS + JS)
 Node.js + Express  (server.js — the backend / API)
    │
    ▼
-Postgres  (Netlify DB / Neon, or PGlite locally)
+Postgres  (any provider, or PGlite locally)
 ```
 - **HTML** → `views/` (page templates, served by Express)
 - **CSS** → `public/assets/style.css`
@@ -133,7 +133,7 @@ spendsense/
 ├── package.json
 ├── server.js             # Express backend: serves pages + all /api routes
 ├── auth.js               # password hashing, sessions, route guards
-├── db.js                 # Postgres access layer (Neon in prod, PGlite locally)
+├── db.js                 # Postgres access layer (pg in prod, PGlite locally)
 ├── importer.js           # bank-statement parsing (pure functions, no DB access)
 ├── migrate-sqlite-to-postgres.js   # one-off import from the old SQLite build
 ├── netlify.toml          # Netlify build + routing
@@ -163,79 +163,65 @@ spendsense/
 - **Settle-up:** balances are matched largest creditor against largest debtor, producing the fewest transfers that clear everyone.
 - **Import duplicate check:** a row counts as already present when an existing expense shares its date and amount and its description matches once punctuation and case are stripped. The same test also catches repeats inside one file.
 
-## Deploying to Netlify
+## Deploying
 
-The app runs as a single Express-backed Netlify Function, with the frontend assets served from
-the CDN. `netlify.toml` and `netlify/functions/api.js` are already wired up.
+SpendSense is a stateful Node server that stores data in Postgres, so it needs a host that runs a
+long-lived process. **Render is the simplest**, because the included blueprint provisions the
+database too.
 
-### 1. Put it on GitHub
+### Render (recommended)
+
+1. Push this repo to GitHub.
+2. On [render.com](https://render.com): **New → Blueprint**, pick the repo.
+3. Render reads `render.yaml`, creates the web service **and** a free Postgres database, and
+   injects `DATABASE_URL` into the service automatically. Nothing to copy by hand.
+
+On first request the app creates its schema and seeds demo data.
+
+Two things to know about Render's free tier: the web service sleeps after inactivity (the first
+request afterwards takes ~30s to wake), and free Postgres instances expire after a set period —
+check Render's current policy if this needs to last.
+
+### Any other Node host
 
 ```bash
-gh auth login                                        # browser flow, one time
-gh repo create spendsense --public --source=. --push
+npm install --omit=dev
+DATABASE_URL="postgres://user:pass@host/db?sslmode=require" NODE_ENV=production npm start
 ```
-No `gh`? Create an empty repo at github.com, then:
-```bash
-git remote add origin https://github.com/<you>/spendsense.git
-git push -u origin main
-```
+TLS is driven by the connection string's `sslmode`, so certificates are verified normally. Use
+`?sslmode=disable` only for an in-network database such as Render's internal host.
 
-### 2. Deploy
-
-Use `npx` rather than a global install. On macOS, `npm i -g` usually fails with `EACCES` because
-`/usr/local/lib/node_modules` is owned by root, and installing CLIs with `sudo` is worth avoiding.
-
-```bash
-npx netlify-cli login
-npx netlify-cli init             # links the GitHub repo; enables deploy-on-push
-npx netlify-cli database init    # provision Netlify DB (Postgres, powered by Neon)
-npx netlify-cli deploy --prod
-```
-
-`database init` is interactive and sets the Postgres connection string in the site's environment.
-It also offers to scaffold a starter migration — SpendSense creates its own schema on first
-request, so that scaffolding can be skipped or deleted.
-
-`db.js` accepts `NETLIFY_DB_URL`, `NETLIFY_DATABASE_URL` or `DATABASE_URL`, so it works whichever
-name the CLI sets. On first request the function creates its schema and seeds demo data, so a
-fresh site needs no separate migration step.
+`Dockerfile` works the same way; without `DATABASE_URL` it falls back to embedded PGlite under
+`PGLITE_DIR`, which needs a mounted volume.
 
 ### Bringing existing data across
-If you have been using the old SQLite build, copy its contents into Postgres once:
+If you used the older SQLite build:
 
 ```bash
 npm install --include=dev                        # the migration needs better-sqlite3
 DATABASE_URL="postgres://..." npm run migrate    # add --dry to preview
 ```
-Get the connection string with `npx netlify-cli database connect`, or from the site's environment
-variables in the Netlify dashboard.
-The script copies users, categories, expenses, recurring rules, settings, members and splits,
-preserving ids, then resets the Postgres sequences so new inserts cannot collide. It refuses to
-run against a database that already has accounts.
+It copies users, categories, expenses, recurring rules, settings, members and splits, preserving
+ids, then resets the Postgres sequences. It refuses to run against a database that already has
+accounts.
 
-### Why the stack changed
-The original build used `better-sqlite3`, which cannot work on Netlify: it is a native module that
-fails to load on AWS Lambda (`invalid ELF header`, `GLIBC_2.29 not found`), and function
-filesystems are ephemeral, so a SQLite file would be lost between invocations. Postgres removes
-both problems.
-
-### Other hosts
-`Dockerfile` and `render.yaml` still work for Render, Railway, Fly.io or a VPS. Set `DATABASE_URL`
-to a managed Postgres, or leave it unset and mount a volume at `PGLITE_DIR` for the embedded
-engine.
+### Why not Netlify or Vercel
+Both run serverless functions with an ephemeral filesystem and no long-lived process. A function
+deploy of this app works, but Netlify DB only provisioned a dev-context database on a free team,
+leaving the function with no connection string at runtime. `netlify.toml` and
+`netlify/functions/api.js` remain in the repo and do work if you supply `DATABASE_URL` yourself.
 
 ### Production hardening already in place
 - HTTPS redirect and HSTS when `NODE_ENV=production`
 - `Secure`, `HttpOnly`, `SameSite=Lax` session cookies
-- `trust proxy` enabled so the login throttle sees real client IPs behind a load balancer
-- Cross-origin mutating requests rejected by an Origin check (CSRF defence; all mutating routes are JSON-only)
+- `trust proxy` so the login throttle sees real client IPs behind a load balancer
+- Cross-origin mutating requests rejected by an Origin check (CSRF defence; mutating routes are JSON-only)
 - `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` headers
-- Sign-up and login both rate limited per IP
+- Sign-up and login rate limited per IP
 
 ### Still worth doing before real users
-- The login/sign-up throttle is in-memory, so it resets between function invocations and is not
-  shared across instances. Move it into Postgres if you need it to hold on serverless.
-- There is no email verification, password reset or account deletion.
+- The rate limiter is in-memory, so it resets on restart and is per-instance.
+- No email verification, password reset or account deletion.
 
 ## Commands
 ```bash

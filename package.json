@@ -12,15 +12,15 @@
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.13",
-    "@neondatabase/serverless": "^1.2.0",
-    "@netlify/database": "^2.0.1",
     "express": "^4.21.0",
+    "pg": "^8.23.1",
     "serverless-http": "^4.0.0"
   },
   "engines": {
     "node": ">=18"
   },
   "devDependencies": {
+    "@electric-sql/pglite-socket": "^0.2.16",
     "better-sqlite3": "^11.3.0"
   }
 }

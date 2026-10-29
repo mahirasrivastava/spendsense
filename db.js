@@ -1,6 +1,6 @@
 // db.js — Postgres access layer.
 //
-//   production : Netlify DB (Neon), via the connection string env var below
+//   production : any Postgres (Render, Railway, Neon, Supabase) via DATABASE_URL
 //   local dev  : PGlite, a real Postgres engine embedded in the process, so
 //                there is nothing to install and the SQL dialect is identical.
 //
@@ -20,10 +20,13 @@ async function connect() {
   if (driver) return driver;
 
   if (CONN) {
-    const { Pool } = require('@neondatabase/serverless');
-    const pool = new Pool({ connectionString: CONN });
+    const { Pool } = require('pg');
+    // TLS is driven by the connection string's sslmode, so certificates are
+    // still verified. Managed providers want `?sslmode=require`; an in-network
+    // database (Render's internal host) wants `?sslmode=disable`.
+    const pool = new Pool({ connectionString: CONN, max: Number(process.env.PG_POOL_MAX || 5) });
     driver = {
-      kind: 'neon',
+      kind: 'postgres',
       query: (text, params = []) => pool.query(text, params),
       async tx(fn) {
         const client = await pool.connect();
