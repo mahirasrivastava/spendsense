@@ -2,8 +2,8 @@
    Injects a single <svg> sprite, then exposes window.icon(name, className). */
 (function () {
   const P = {
-    /* brand mark — an S monogram drawn as one continuous stroke */
-    logo: '<path d="M16.8 7.3c0-2.1-2.1-3.4-4.8-3.4S7.2 5.2 7.2 7.3c0 4.7 9.6 3.6 9.6 8.3 0 2.1-2.1 3.4-4.8 3.4s-4.8-1.3-4.8-3.4" stroke-width="2"/>',
+    /* brand mark — an S monogram beside three ascending chart bars */
+    logo: '<path d="M12.56 7.51c0-2-2-3.23-4.56-3.23S3.44 5.52 3.44 7.51c0 4.47 9.12 3.42 9.12 7.89 0 2-2 3.23-4.56 3.23s-4.56-1.24-4.56-3.23" stroke-width="2"/><path d="M15.8 18.6v-4.4M19 18.6v-7.6M22.2 18.6v-10.8" stroke-width="2"/>',
     /* app + navigation */
     activity: '<path d="M3 13h4l2.5 6L14 5l2.5 8H21"/>',
     receipt: '<path d="M5 3.5h14v16.2a.8.8 0 0 1-1.2.7L15 19l-2.6 1.6a.8.8 0 0 1-.8 0L9 19l-2.8 1.4a.8.8 0 0 1-1.2-.7z"/><path d="M9 8h6M9 12h6"/>',
