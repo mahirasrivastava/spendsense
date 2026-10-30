@@ -142,6 +142,44 @@ h3 { font-size: .95rem; font-weight: 650; letter-spacing: -.01em; color: var(--i
 .brand-text { display: flex; flex-direction: column; font-weight: 750; font-size: 1.07rem; letter-spacing: -.03em; line-height: 1.15; }
 .brand-text small { font-size: .7rem; font-weight: 500; color: var(--muted); letter-spacing: -.005em; }
 
+/* Brand wordmark — a gradient fill with a soft glow behind it.
+   The gradient is oversized and slowly panned so the mark catches the eye
+   without ever moving or changing size, which would pull focus from the page. */
+.brand-word {
+  font-weight: inherit;
+  background: linear-gradient(95deg, var(--brand-1) 0%, var(--brand-2) 38%, #a78bfa 62%, var(--brand-2) 100%);
+  background-size: 260% 100%;
+  background-position: 0% 50%;
+  transition: filter .28s var(--ease), background-position .6s var(--ease);
+  filter: drop-shadow(0 0 7px rgba(59, 130, 246, .32));
+}
+/* Clipping the background to the glyphs needs support; without it the text
+   would be painted transparent and vanish, so the colour only drops out
+   inside this guard. */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .brand-word {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
+:root[data-theme="dark"] .brand-word { filter: drop-shadow(0 0 9px rgba(96, 165, 250, .5)); }
+
+.nav-brand:hover .brand-word,
+.sidebar .nav-brand:hover .brand-word {
+  background-position: 100% 50%;
+  filter: drop-shadow(0 0 14px rgba(96, 165, 250, .62));
+}
+/* The glow breathes very slowly so it reads as a sheen, not a blink. */
+@keyframes brandGlow {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(59, 130, 246, .28)); }
+  50%      { filter: drop-shadow(0 0 13px rgba(96, 165, 250, .55)); }
+}
+.brand-word { animation: brandGlow 5.5s ease-in-out infinite; }
+.nav-brand:hover .brand-word { animation: none; }
+
+
 .nav { display: flex; flex-direction: column; gap: 2px; }
 .nav-item {
   position: relative; display: flex; align-items: center; gap: 11px;
@@ -510,6 +548,7 @@ td input { height: 34px; font-size: .85rem; }
 @keyframes rise { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
 
 @media (prefers-reduced-motion: reduce) {
+  .brand-word { animation: none; }
   *, *::before, *::after {
     animation-duration: .01ms !important; animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
